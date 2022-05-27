@@ -1,0 +1,6 @@
+[linux]
+192.168.1.66
+
+[linux:vars]
+ansible_ssh_user=daed
+become=yes
