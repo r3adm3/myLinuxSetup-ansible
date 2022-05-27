@@ -3,104 +3,75 @@
   hosts: linux
 
   tasks:
-    - name: Install figlet
+
+    - name: Update apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    - name: Install required system packages
       apt: 
-        name: 
+        pkg: 
           - figlet
-        state: present
- 
-    - name: Install cowsay
-      apt: 
-        name: 
           - cowsay
-        state: present
-
-    - name: Install jq
-      apt: 
-        name: 
           - jq
-        state: present
-
-    - name: Install git
-      apt: 
-        name: 
           - git
-        state: present
-
-    - name: Install tmux
-      apt: 
-        name: 
           - tmux
-        state: present
-
-    - name: Install fzf
-      apt: 
-        name: 
           - fzf
-        state: present
-
-    - name: Install bat 
-      apt: 
-        name: 
           - bat
-        state: present
-
-    - name: Install mc 
-      apt: 
-        name: 
           - mc
-        state: present
-
-    - name: Install exa 
-      apt: 
-        name: 
           - exa
-        state: present
-
-    - name: Install htop 
-      apt: 
-        name: 
           - htop
-        state: present
-
-    - name: Install atop 
-      apt: 
-        name: 
           - atop
-        state: present
-
-    - name: Install curl 
-      apt: 
-        name: 
           - curl
-        state: present
-
-    - name: Install lynx 
-      apt: 
-        name: 
           - lynx
-        state: present
-
-    - name: Install wget 
-      apt: 
-        name: 
           - wget
-        state: present
-
-    - name: Install ripgrep 
-      apt: 
-        name: 
           - ripgrep
-        state: present
-
-    - name: Install python3-pip 
-      apt: 
-        name: 
           - python3-pip
+          - virtualenv
+          - lftp
+        state: latest
+        update_cache: true
+      
+    - name: Install docker pre-reqs
+      apt: 
+        pkg: 
+          - apt-transport-https
+          - ca-certificates
+          - software-properties-common
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Install lftp
-      apt: 
-        name: 
-          - lftp
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Ensure group "docker" exists with correct gid
+      ansible.builtin.group:
+        name: docker
+        state: present
+        gid: 1750
+
+    - name: Adding docker group to user daed 
+      user: name=daed
+            groups=docker
+            append=yes
+    
