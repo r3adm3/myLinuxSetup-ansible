@@ -88,14 +88,30 @@
         url: https://packages.microsoft.com/keys/microsoft.asc
         state: present
 
-    - name: Add Docker Repository
+    - name: Add azure-cli Repository
       apt_repository:
         repo: deb https://packages.microsoft.com/repos/azure-cli/ focal main
         state: present   
    
-    - name: Update apt and install docker-ce
+    - name: Update apt and install azure-cli
       apt:
         name: azure-cli
+        state: latest
+        update_cache: true
+
+    - name: Add gcloud GPG apt Key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add gcloud Repository
+      apt_repository:
+        repo: deb https://packages.cloud.google.com/apt cloud-sdk main
+        state: present   
+   
+    - name: Update apt and install gcloud
+      apt:
+        name: google-cloud-cli
         state: latest
         update_cache: true
 
