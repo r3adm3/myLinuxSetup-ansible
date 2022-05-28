@@ -130,3 +130,20 @@
         name: terraform
         state: latest
         update_cache: true
+
+    - name: Copy .gitconfig file 
+      ansible.builtin.copy:
+        src: files/.gitconfig
+        dest: /home/daed/.gitconfig
+        owner: daed
+        group: daed
+        mode: '0644'
+
+    - name: Create Source directory
+      ansible.builtin.file:
+        path: /home/daed/Source/github
+        state: directory
+        owner: daed
+        group: daed
+        mode: '0755'
+            

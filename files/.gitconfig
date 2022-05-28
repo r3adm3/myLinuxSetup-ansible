@@ -1,0 +1,8 @@
+[user]
+  name = Adrian Farnell
+  email = adrianjfarnell@gmail.com
+
+[alias]
+  lg = log --graph --pretty=format:'%C(green)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset' --abbrev-commit --date=relative
+[init]
+	defaultBranch = main
