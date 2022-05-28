@@ -74,4 +74,28 @@
       user: name=daed
             groups=docker
             append=yes
-    
+
+    - name: Install azurecli pre-reqs
+      apt: 
+        pkg: 
+          - lsb-release
+          - gnupg
+        state: latest
+        update_cache: true
+
+    - name: Add azurecli GPG apt Key
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://packages.microsoft.com/repos/azure-cli/ focal main
+        state: present   
+   
+    - name: Update apt and install docker-ce
+      apt:
+        name: azure-cli
+        state: latest
+        update_cache: true
+
