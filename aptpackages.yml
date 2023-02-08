@@ -92,7 +92,18 @@
       apt_repository:
         repo: deb https://packages.microsoft.com/repos/azure-cli/ focal main
         state: present   
-   
+
+    - name: Add Repository for libssl 1.1
+      apt_repository:
+        repo: deb http://security.ubuntu.com/ubuntu focal-security main
+        state: present
+
+    - name: Update apt and install libssl1.1
+      apt:
+        name: libssl1.1
+        state: latest
+        update_cache: true
+
     - name: Update apt and install azure-cli
       apt:
         name: azure-cli
