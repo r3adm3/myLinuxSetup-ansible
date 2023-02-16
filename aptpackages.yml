@@ -157,4 +157,19 @@
         owner: daed
         group: daed
         mode: '0755'
-            
+       
+    - name: Create DNS resolver Directory
+      file:
+        path: /etc/systemd/resolved.conf.d/
+        state: directory
+        owner: root
+        group: root
+   
+    - name: Copy dns_servers.conf file 
+      ansible.builtin.copy:
+        src: files/dns_servers.conf
+        dest: /etc/systemd/resolved.conf.d/dns_servers.conf
+        owner: root
+        group: root
+        mode: '0644'
+
