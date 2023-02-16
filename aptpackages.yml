@@ -172,4 +172,9 @@
         owner: root
         group: root
         mode: '0644'
+        
+    - name: Restart service httpd, in all cases
+      ansible.builtin.service:
+        name: systemd-resolved
+        state: restarted
 
