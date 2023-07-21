@@ -1,0 +1,16 @@
+---
+- name: Install apt packages
+  hosts: all
+
+  tasks:
+    - name: Update apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    - name: Install required system packages
+      apt: 
+        pkg: 
+          - exa
+

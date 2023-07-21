@@ -1,0 +1,113 @@
+---
+- name: Install apt packages
+  hosts: all
+
+  tasks:
+
+    - name: Update apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    - name: Install docker pre-reqs
+      apt: 
+        pkg: 
+          - apt-transport-https
+          - ca-certificates
+          - software-properties-common
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Ensure group "docker" exists with correct gid
+      ansible.builtin.group:
+        name: docker
+        state: present
+        gid: 1750
+
+    - name: Adding docker group to user daed 
+      user: name=daed
+            groups=docker
+            append=yes
+
+    - name: Install azurecli pre-reqs
+      apt: 
+        pkg: 
+          - lsb-release
+          - gnupg
+        state: latest
+        update_cache: true
+
+    - name: Add azurecli GPG apt Key
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Add azure-cli Repository
+      apt_repository:
+        repo: deb https://packages.microsoft.com/repos/azure-cli/ focal main
+        state: present   
+
+    - name: Add Repository for libssl 1.1
+      apt_repository:
+        repo: deb http://security.ubuntu.com/ubuntu focal-security main
+        state: present
+
+    - name: Update apt and install libssl1.1
+      apt:
+        name: libssl1.1
+        state: latest
+        update_cache: true
+
+    - name: Update apt and install azure-cli
+      apt:
+        name: azure-cli
+        state: latest
+        update_cache: true
+
+    - name: Add gcloud GPG apt Key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add gcloud Repository
+      apt_repository:
+        repo: deb https://packages.cloud.google.com/apt cloud-sdk main
+        state: present   
+   
+    - name: Update apt and install gcloud
+      apt:
+        name: google-cloud-cli
+        state: latest
+        update_cache: true
+
+    - name: Add hashicorp GPG apt Key
+      apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+
+    - name: Add hashicorp Repository
+      apt_repository:
+        repo: deb https://apt.releases.hashicorp.com focal main
+        state: present   
+   
+    - name: Update apt and install terraform
+      apt:
+        name: terraform
+        state: latest
+        update_cache: true

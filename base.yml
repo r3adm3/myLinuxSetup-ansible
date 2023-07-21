@@ -1,0 +1,60 @@
+---
+- name: Install apt packages
+  hosts: all
+
+  tasks:
+    - name: Update apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    - name: Install required system packages
+      apt: 
+        pkg: 
+          - figlet
+          - cowsay
+          - jq
+          - git
+          - tmux
+          - fzf
+          - bat
+          - mc
+          - htop
+          - atop
+          - curl
+          - lynx
+          - wget
+          - ripgrep
+          - python3-pip
+          - virtualenv
+          - lftp
+        state: latest
+        update_cache: true
+
+    - name: Print debug message
+      debug:
+        msg: Hello World.
+    
+    - name: File Copy
+      copy:
+        src: files/.gitconfig
+        dest: /home/daed/.gitconfig
+        owner: daed
+        group: daed
+        mode: '0644'
+
+    - name: Create DNS resolver Directory
+      file:
+        path: /etc/systemd/resolved.conf.d/
+        state: directory
+        owner: root
+        group: root
+   
+    - name: Copy dns_servers.conf file 
+      copy:
+        src: files/dns_servers.conf
+        dest: /etc/systemd/resolved.conf.d/dns_servers.conf
+        owner: root
+        group: root
+        mode: '0644'
