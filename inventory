@@ -1,9 +1,17 @@
 [linux]
-192.168.1.109
-192.168.1.149
-192.168.1.226
-192.168.1.198
-192.168.1.232
+lin-ubu2204-002.lan
+lin-kubu2204-001.lan
+lin-kubu2204-002.lan
+lin-kubu2204-003.lan
+
+[pis]
+dockerpi.lan
+enviropi.lan
+retropi.lan
+
+[pis:vars]
+ansible_ssh_user=pi
+become=yes
 
 [linux:vars]
 ansible_ssh_user=daed

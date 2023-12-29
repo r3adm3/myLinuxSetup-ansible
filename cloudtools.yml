@@ -96,6 +96,12 @@
         state: latest
         update_cache: true
 
+    - name: Update apt and install kubectl
+      apt:
+        name: kubectl
+        state: latest
+        update_cache: true
+
     - name: Add hashicorp GPG apt Key
       apt_key:
         url: https://apt.releases.hashicorp.com/gpg
