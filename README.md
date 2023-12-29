@@ -11,14 +11,14 @@ sudo apt install python3 python-is-python3
 
 4a. Install all apt packages and cloud tools
 ```bash
-ansible-playbook -i inventory aptpackages.yml -b
+ansible-playbook -i inventory aptpackages.yml -b -K
 ```
 
 or 
 
 4b. Install just base OS packages (no cloud tools)
 ```bash
-ansible-playbook -i inventory -b base.yml -u daed -K
+ansible-playbook -i inventory base.yml -u daed -b -K
 ```
 
 Troubleshooting across many machines
